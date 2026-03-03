@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Indian Resume Builder</title>
+<style>
+body{
+    font-family: Arial;
+    background: linear-gradient(135deg,#FF9933,#FFFFFF,#138808);
+    margin:0;
+    padding:0;
+    text-align:center;
+}
+.container{
+    padding:20px;
+}
+input, select, textarea{
+    width:90%;
+    padding:8px;
+    margin:6px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:20px;
+    background:#138808;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:10px;
+}
+.resume{
+    background:white;
+    color:black;
+    margin:20px auto;
+    padding:20px;
+    width:90%;
+    border-radius:10px;
+    text-align:left;
+}
+img{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:10px;
+}
+@media print {
+    button { display:none; }
+    body { background:white; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>🇮🇳 Indian Resume Builder</h1>
+
+<input type="file" id="photo"><br>
+<input type="text" id="name" placeholder="Full Name"><br>
+<input type="text" id="father" placeholder="Father's Name"><br>
+<input type="text" id="mother" placeholder="Mother's Name"><br>
+
+<select id="day"></select>
+<select id="month"></select>
+<select id="year"></select><br>
+
+<select id="gender">
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select><br>
+
+<select id="marital">
+<option>Single</option>
+<option>Married</option>
+</select><br>
+
+<textarea id="address" placeholder="Full Address"></textarea><br>
+<input type="text" id="phone" placeholder="Mobile Number"><br>
+<input type="email" id="email" placeholder="Email"><br>
+
+<textarea id="education" placeholder="Education Details"></textarea><br>
+<textarea id="skills" placeholder="Skills"></textarea><br>
+<textarea id="experience" placeholder="Experience"></textarea><br>
+
+<input type="text" id="aadhaar" placeholder="Aadhaar Number"><br>
+<input type="text" id="pan" placeholder="PAN Number"><br>
+
+<button onclick="generateResume()">Generate Resume</button>
+
+<div id="output"></div>
+
+</div>
+
+<script>
+
+// Date Dropdown
+for(let i=1;i<=31;i++){
+document.getElementById("day").innerHTML += `<option>${i}</option>`;
+}
+
+const months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+months.forEach(m=>{
+document.getElementById("month").innerHTML += `<option>${m}</option>`;
+});
+
+for(let y=1970;y<=2025;y++){
+document.getElementById("year").innerHTML += `<option>${y}</option>`;
+}
+
+function generateResume(){
+
+let photo = document.getElementById("photo").files[0];
+let name = document.getElementById("name").value;
+let father = document.getElementById("father").value;
+let mother = document.getElementById("mother").value;
+let day = document.getElementById("day").value;
+let month = document.getElementById("month").value;
+let year = document.getElementById("year").value;
+let gender = document.getElementById("gender").value;
+let marital = document.getElementById("marital").value;
+let address = document.getElementById("address").value;
+let phone = document.getElementById("phone").value;
+let email = document.getElementById("email").value;
+let education = document.getElementById("education").value;
+let skills = document.getElementById("skills").value;
+let experience = document.getElementById("experience").value;
+let aadhaar = document.getElementById("aadhaar").value;
+let pan = document.getElementById("pan").value;
+
+let reader = new FileReader();
+reader.onload = function(){
+document.getElementById("output").innerHTML = `
+<div class="resume">
+<img src="${reader.result}">
+<h2>${name}</h2>
+<p><b>Father:</b> ${father}</p>
+<p><b>Mother:</b> ${mother}</p>
+<p><b>DOB:</b> ${day} ${month} ${year}</p>
+<p><b>Gender:</b> ${gender}</p>
+<p><b>Marital Status:</b> ${marital}</p>
+<p><b>Address:</b> ${address}</p>
+<p><b>Mobile:</b> ${phone}</p>
+<p><b>Email:</b> ${email}</p>
+<hr>
+<h3>Education</h3>
+<p>${education}</p>
+<h3>Skills</h3>
+<p>${skills}</p>
+<h3>Experience</h3>
+<p>${experience}</p>
+<hr>
+<p><b>Aadhaar:</b> ${aadhaar}</p>
+<p><b>PAN:</b> ${pan}</p>
+<button onclick="window.print()">Download / Print</button>
+</div>
+`;
+}
+if(photo){
+reader.readAsDataURL(photo);
+}else{
+alert("Please upload photo");
+}
+}
+
+</script>
+
+</body>
+</html>
